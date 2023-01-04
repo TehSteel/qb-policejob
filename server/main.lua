@@ -1081,6 +1081,17 @@ RegisterNetEvent('police:server:SetTracker', function(targetId)
     end
 end)
 
+RegisterNetEvent('police:server:deleteSpike', function(netid)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+
+    if Player and Player.PlayerData.job.name == 'police' and Player.PlayerData.job.onduty then
+        DeleteEntity(NetworkGetEntityFromNetworkId(netid))
+    else
+        TriggerClientEvent('QBCore:Notify', src, Lang:t('error.on_duty_police_only'), 'error')
+    end
+end)
+
 RegisterNetEvent('police:server:SyncSpikes', function(table)
     TriggerClientEvent('police:client:SyncSpikes', -1, table)
 end)
